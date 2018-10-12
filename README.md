@@ -1,6 +1,6 @@
 # Poster
 
-Poster is a standalone JavaScript poster-generating micro-library.
+Poster is a standalone JavaScript poster-generating micro-library. [Check out a Demo](https://overbool.github.io/poster/).
 
 ## Quick start
 
