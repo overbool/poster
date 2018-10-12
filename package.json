@@ -1,6 +1,6 @@
 {
   "name": "@overbool/poster",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A beautiful canvas poster",
   "main": "src/poster.js",
   "homepage": "https://github.com/overbool/poster",
