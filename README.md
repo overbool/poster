@@ -2,6 +2,8 @@
 
 Poster is a standalone JavaScript poster-generating micro-library. [Check out a Demo](https://overbool.github.io/poster/).
 
+![screenshot](./images/screenshot.png)
+
 ## Quick start
 
 Several quick start options are available:
