@@ -9,7 +9,7 @@ Poster is a standalone JavaScript poster-generating micro-library. [Check out a 
 Several quick start options are available:
 
 * Clone the repo: git clone https://github.com/overbool/poster.git
-* Install with npm: npm install poster
+* Install with npm: `npm i @overbool/poster` 
 
 ## What's included
 
