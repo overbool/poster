@@ -11,19 +11,29 @@ const poster = (function () {
     $container.style.border = '1px solid #f0f0f0'
     const $wrapper = createDom('div', 'id', 'wrapper')
     const $canvas = createDom('canvas', 'id', 'canvas', 'block')
+    const $author = createDom('canvas', 'id', 'author')
     const $day = createDom('canvas', 'id', 'day')
     const $date = createDom('canvas', 'id', 'date')
     const $title = createDom('canvas', 'id', 'title')
     const $content = createDom('canvas', 'id', 'content')
     const $logo = createDom('canvas', 'id', 'logo')
     const $description = createDom('canvas', 'id', 'description')
+    const $qrcode = createDom('canvas', 'id', 'qrcode')
+    const $qrcodeDesc = createDom('canvas', 'id', 'qrcode-desc')
 
-    appendChilds($wrapper, $canvas, $day, $date, $title, $content, $logo, $description)
+    appendChilds($wrapper, $canvas, $author, $day, $date, $title, $content, $logo, $description, $qrcode, $qrcodeDesc)
     $container.appendChild($wrapper)
 
-    const date = new Date()
+    // author
+    const authorStyle = {
+      font: 'italic 45px Arial',
+      color: 'rgba(255, 255, 255, 1)',
+      position: 'left'
+    }
+    drawOneline($author, authorStyle, config.author)
 
     // day
+    const date = new Date()
     const dayStyle = {
       font: 'italic bold 70px Arial',
       color: 'rgba(255, 255, 255, 1)',
@@ -70,6 +80,7 @@ const poster = (function () {
       color: 'rgba(0, 0, 25, 1)'
     }
     logoStyle.color = (config.logoStyle && config.logoStyle.color) || logoStyle.color
+    $logo.width *= 0.7
     drawOneline($logo, logoStyle, config.logo)
 
     // description
@@ -79,30 +90,53 @@ const poster = (function () {
       lineHeight: 1.1,
       position: 'center'
     }
+    $description.width *= 0.7777777
     drawMoreLines($description, descriptionStyle, config.description)
 
+    // qrcode desc
+    const qrcodeDescStyle = {
+      font: '28px Arial',
+      color: 'rgba(88, 88, 88, 1)',
+      lineHeight: 1.1,
+      position: 'center'
+    }
+    $qrcodeDesc.width *= 0.7
+    drawOneline($qrcodeDesc, qrcodeDescStyle, config.qrcodeDesc)
 
     // background image
     const image = new Image();
+    const qrcodeImg = new Image();
     const onload = function () {
-      $canvas.width = WIDTH;
-      $canvas.height = HEIGHT;
-      image.src = config.banner;
-      image.onload = function () {
+      $canvas.width = WIDTH
+      $canvas.height = HEIGHT
+      // load background image
+      image.src = config.banner
+      image.onload = render
+
+      // load qrcode
+      qrcodeImg.src = config.qrcode
+      qrcodeImg.onload = function() {}
+    }
+    window.addEventListener("load", onload, false)
+
+    const render = function() {
         const ctx = $canvas.getContext('2d')
-        ctx.fillStyle = 'rgba(255, 255, 255, 1)';
+        ctx.fillStyle = 'rgba(255, 255, 255, 1)'
         ctx.fillRect(0, 0, $canvas.width, $canvas.height)
         ctx.drawImage(image, 0, 0, $canvas.width, $canvas.height / 2)
+        ctx.drawImage($author, 15, 15)
         ctx.drawImage($day, 0, $canvas.height / 2 - 120)
         ctx.drawImage($date, 0, $canvas.height / 2 - 50)
-        ctx.drawImage($title, 0, $canvas.height / 2 + 90)
-        ctx.drawImage($content, 0, $canvas.height / 2 + 200)
-        ctx.drawImage($logo, 0, $canvas.height - $logo.height - 30)
-        ctx.drawImage($description, 0, $canvas.height - $description.height + 30)
-        ctx.strokeStyle = 'rgba(122, 122, 122, 0.5)';
+        ctx.drawImage($title, 0, $canvas.height / 2 + 75)
+        ctx.drawImage($content, 0, $canvas.height / 2 + 185)
+        ctx.drawImage($logo, 0, $canvas.height - $logo.height - 25)
+        ctx.drawImage($description, 0, $canvas.height - $description.height + 20)
+        ctx.drawImage($qrcodeDesc, 0, $canvas.height - $description.height - 25)
+        ctx.drawImage(qrcodeImg, $canvas.width*0.7 + 20, $canvas.height - $description.height - 30, $canvas.width * 0.2, $canvas.width * 0.2)
+        ctx.strokeStyle = 'rgba(122, 122, 122, 0.5)'
         ctx.setLineDash([5, 6]);
-        ctx.moveTo(0, $canvas.height / 2 + 400)
-        ctx.lineTo(768, $canvas.height / 2 + 400)
+        ctx.moveTo(0, $canvas.height / 2 + 365)
+        ctx.lineTo(768, $canvas.height / 2 + 365)
         ctx.stroke()
         const img = new Image();
         img.src = $canvas.toDataURL('image/png')
@@ -116,9 +150,7 @@ const poster = (function () {
         if (config.callback) {
           config.callback($container)
         }
-      }
     }
-    window.addEventListener("load", onload, false)
   }
 
   function createDom(name, key, value, display = 'none') {

@@ -1,4 +1,4 @@
-/*! poster v1.0.0 | (c) 2018 Overbool | https://github.com/overbool/poster */
+/*! @overbool/poster v1.0.1 | (c) 2018 Overbool | https://github.com/overbool/poster */
 "use strict";
 
 // post class
@@ -12,16 +12,26 @@ var poster = function () {
     $container.style.border = '1px solid #f0f0f0';
     var $wrapper = createDom('div', 'id', 'wrapper');
     var $canvas = createDom('canvas', 'id', 'canvas', 'block');
+    var $author = createDom('canvas', 'id', 'author');
     var $day = createDom('canvas', 'id', 'day');
     var $date = createDom('canvas', 'id', 'date');
     var $title = createDom('canvas', 'id', 'title');
     var $content = createDom('canvas', 'id', 'content');
     var $logo = createDom('canvas', 'id', 'logo');
     var $description = createDom('canvas', 'id', 'description');
-    appendChilds($wrapper, $canvas, $day, $date, $title, $content, $logo, $description);
-    $container.appendChild($wrapper);
-    var date = new Date(); // day
+    var $qrcode = createDom('canvas', 'id', 'qrcode');
+    var $qrcodeDesc = createDom('canvas', 'id', 'qrcode-desc');
+    appendChilds($wrapper, $canvas, $author, $day, $date, $title, $content, $logo, $description, $qrcode, $qrcodeDesc);
+    $container.appendChild($wrapper); // author
 
+    var authorStyle = {
+      font: 'italic 45px Arial',
+      color: 'rgba(255, 255, 255, 1)',
+      position: 'left'
+    };
+    drawOneline($author, authorStyle, config.author); // day
+
+    var date = new Date();
     var dayStyle = {
       font: 'italic bold 70px Arial',
       color: 'rgba(255, 255, 255, 1)',
@@ -64,6 +74,7 @@ var poster = function () {
       color: 'rgba(0, 0, 25, 1)'
     };
     logoStyle.color = config.logoStyle && config.logoStyle.color || logoStyle.color;
+    $logo.width *= 0.7;
     drawOneline($logo, logoStyle, config.logo); // description
 
     var descriptionStyle = {
@@ -72,48 +83,68 @@ var poster = function () {
       lineHeight: 1.1,
       position: 'center'
     };
-    drawMoreLines($description, descriptionStyle, config.description); // background image
+    $description.width *= 0.7777777;
+    drawMoreLines($description, descriptionStyle, config.description); // qrcode desc
+
+    var qrcodeDescStyle = {
+      font: '28px Arial',
+      color: 'rgba(88, 88, 88, 1)',
+      lineHeight: 1.1,
+      position: 'center'
+    };
+    $qrcodeDesc.width *= 0.7;
+    drawOneline($qrcodeDesc, qrcodeDescStyle, config.qrcodeDesc); // background image
 
     var image = new Image();
+    var qrcodeImg = new Image();
 
     var onload = function onload() {
       $canvas.width = WIDTH;
-      $canvas.height = HEIGHT;
+      $canvas.height = HEIGHT; // load background image
+
       image.src = config.banner;
+      image.onload = render; // load qrcode
 
-      image.onload = function () {
-        var ctx = $canvas.getContext('2d');
-        ctx.fillStyle = 'rgba(255, 255, 255, 1)';
-        ctx.fillRect(0, 0, $canvas.width, $canvas.height);
-        ctx.drawImage(image, 0, 0, $canvas.width, $canvas.height / 2);
-        ctx.drawImage($day, 0, $canvas.height / 2 - 120);
-        ctx.drawImage($date, 0, $canvas.height / 2 - 50);
-        ctx.drawImage($title, 0, $canvas.height / 2 + 90);
-        ctx.drawImage($content, 0, $canvas.height / 2 + 200);
-        ctx.drawImage($logo, 0, $canvas.height - $logo.height - 30);
-        ctx.drawImage($description, 0, $canvas.height - $description.height + 30);
-        ctx.strokeStyle = 'rgba(122, 122, 122, 0.5)';
-        ctx.setLineDash([5, 6]);
-        ctx.moveTo(0, $canvas.height / 2 + 400);
-        ctx.lineTo(768, $canvas.height / 2 + 400);
-        ctx.stroke();
-        var img = new Image();
-        img.src = $canvas.toDataURL('image/png');
-        var radio = config.radio || 0.7;
-        img.width = WIDTH * radio;
-        img.height = HEIGHT * radio;
-        ctx.clearRect(0, 0, $canvas.width, $canvas.height);
-        $canvas.style.display = 'none';
-        $container.appendChild(img);
-        $container.removeChild($wrapper);
+      qrcodeImg.src = config.qrcode;
 
-        if (config.callback) {
-          config.callback($container);
-        }
-      };
+      qrcodeImg.onload = function () {};
     };
 
     window.addEventListener("load", onload, false);
+
+    var render = function render() {
+      var ctx = $canvas.getContext('2d');
+      ctx.fillStyle = 'rgba(255, 255, 255, 1)';
+      ctx.fillRect(0, 0, $canvas.width, $canvas.height);
+      ctx.drawImage(image, 0, 0, $canvas.width, $canvas.height / 2);
+      ctx.drawImage($author, 15, 15);
+      ctx.drawImage($day, 0, $canvas.height / 2 - 120);
+      ctx.drawImage($date, 0, $canvas.height / 2 - 50);
+      ctx.drawImage($title, 0, $canvas.height / 2 + 75);
+      ctx.drawImage($content, 0, $canvas.height / 2 + 185);
+      ctx.drawImage($logo, 0, $canvas.height - $logo.height - 25);
+      ctx.drawImage($description, 0, $canvas.height - $description.height + 20);
+      ctx.drawImage($qrcodeDesc, 0, $canvas.height - $description.height - 25);
+      ctx.drawImage(qrcodeImg, $canvas.width * 0.7 + 20, $canvas.height - $description.height - 30, $canvas.width * 0.2, $canvas.width * 0.2);
+      ctx.strokeStyle = 'rgba(122, 122, 122, 0.5)';
+      ctx.setLineDash([5, 6]);
+      ctx.moveTo(0, $canvas.height / 2 + 365);
+      ctx.lineTo(768, $canvas.height / 2 + 365);
+      ctx.stroke();
+      var img = new Image();
+      img.src = $canvas.toDataURL('image/png');
+      var radio = config.radio || 0.7;
+      img.width = WIDTH * radio;
+      img.height = HEIGHT * radio;
+      ctx.clearRect(0, 0, $canvas.width, $canvas.height);
+      $canvas.style.display = 'none';
+      $container.appendChild(img);
+      $container.removeChild($wrapper);
+
+      if (config.callback) {
+        config.callback($container);
+      }
+    };
   }
 
   function createDom(name, key, value) {
