@@ -100,14 +100,16 @@ var poster = function () {
 
     var onload = function onload() {
       $canvas.width = WIDTH;
-      $canvas.height = HEIGHT; // load background image
+      $canvas.height = HEIGHT; // load background image and qrcode
 
-      image.src = config.banner;
-      image.onload = render; // load qrcode
-
+      qrcodeImg.crossOrigin = 'Anonymous';
+      image.crossOrigin = 'Anonymous';
       qrcodeImg.src = config.qrcode;
 
-      qrcodeImg.onload = function () {};
+      qrcodeImg.onload = function () {
+        image.src = config.banner;
+        image.onload = render;
+      };
     };
 
     window.addEventListener("load", onload, false);

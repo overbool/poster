@@ -109,13 +109,15 @@ const poster = (function () {
     const onload = function () {
       $canvas.width = WIDTH
       $canvas.height = HEIGHT
-      // load background image
-      image.src = config.banner
-      image.onload = render
 
-      // load qrcode
+      // load background image and qrcode
+      qrcodeImg.crossOrigin = 'Anonymous'
+      image.crossOrigin = 'Anonymous'
       qrcodeImg.src = config.qrcode
-      qrcodeImg.onload = function() {}
+      qrcodeImg.onload = function() {
+        image.src = config.banner
+        image.onload = render
+      }
     }
     window.addEventListener("load", onload, false)
 
@@ -138,11 +140,13 @@ const poster = (function () {
         ctx.moveTo(0, $canvas.height / 2 + 365)
         ctx.lineTo(768, $canvas.height / 2 + 365)
         ctx.stroke()
+
         const img = new Image();
         img.src = $canvas.toDataURL('image/png')
         const radio = config.radio || 0.7
         img.width = WIDTH * radio
         img.height = HEIGHT * radio
+
         ctx.clearRect(0, 0, $canvas.width, $canvas.height)
         $canvas.style.display = 'none'
         $container.appendChild(img);
