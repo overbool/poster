@@ -1,5 +1,5 @@
 // post class
-const poster = (function () {
+const poster = (function() {
 
   const DEBUG = false
 
@@ -106,7 +106,7 @@ const poster = (function () {
     // background image
     const image = new Image();
     const qrcodeImg = new Image();
-    const run = function () {
+    const run = function() {
       $canvas.width = WIDTH
       $canvas.height = HEIGHT
 
@@ -123,38 +123,38 @@ const poster = (function () {
     run()
 
     const render = function() {
-        const ctx = $canvas.getContext('2d')
-        ctx.fillStyle = 'rgba(255, 255, 255, 1)'
-        ctx.fillRect(0, 0, $canvas.width, $canvas.height)
-        ctx.drawImage(image, 0, 0, $canvas.width, $canvas.height / 2)
-        ctx.drawImage($author, 15, 15)
-        ctx.drawImage($day, 0, $canvas.height / 2 - 120)
-        ctx.drawImage($date, 0, $canvas.height / 2 - 50)
-        ctx.drawImage($title, 0, $canvas.height / 2 + 75)
-        ctx.drawImage($content, 0, $canvas.height / 2 + 185)
-        ctx.drawImage($logo, 0, $canvas.height - $logo.height - 25)
-        ctx.drawImage($description, 0, $canvas.height - $description.height + 20)
-        ctx.drawImage($qrcodeDesc, 0, $canvas.height - $description.height - 25)
-        ctx.drawImage(qrcodeImg, $canvas.width*0.7 + 20, $canvas.height - $description.height - 30, $canvas.width * 0.2, $canvas.width * 0.2)
-        ctx.strokeStyle = 'rgba(122, 122, 122, 0.5)'
-        ctx.setLineDash([5, 6]);
-        ctx.moveTo(0, $canvas.height / 2 + 365)
-        ctx.lineTo(768, $canvas.height / 2 + 365)
-        ctx.stroke()
+      const ctx = $canvas.getContext('2d')
+      ctx.fillStyle = 'rgba(255, 255, 255, 1)'
+      ctx.fillRect(0, 0, $canvas.width, $canvas.height)
+      ctx.drawImage(image, 0, 0, $canvas.width, $canvas.height / 2)
+      ctx.drawImage($author, 15, 15)
+      ctx.drawImage($day, 0, $canvas.height / 2 - 120)
+      ctx.drawImage($date, 0, $canvas.height / 2 - 50)
+      ctx.drawImage($title, 0, $canvas.height / 2 + 75)
+      ctx.drawImage($content, 0, $canvas.height / 2 + 185)
+      ctx.drawImage($logo, 0, $canvas.height - $logo.height - 25)
+      ctx.drawImage($description, 0, $canvas.height - $description.height + 20)
+      ctx.drawImage($qrcodeDesc, 0, $canvas.height - $description.height - 25)
+      ctx.drawImage(qrcodeImg, $canvas.width * 0.7 + 20, $canvas.height - $description.height - 30, $canvas.width * 0.2, $canvas.width * 0.2)
+      ctx.strokeStyle = 'rgba(122, 122, 122, 0.5)'
+      ctx.setLineDash([5, 6]);
+      ctx.moveTo(0, $canvas.height / 2 + 365)
+      ctx.lineTo(768, $canvas.height / 2 + 365)
+      ctx.stroke()
 
-        const img = new Image();
-        img.src = $canvas.toDataURL('image/png')
-        const radio = config.radio || 0.7
-        img.width = WIDTH * radio
-        img.height = HEIGHT * radio
+      const img = new Image();
+      img.src = $canvas.toDataURL('image/png')
+      const radio = config.radio || 0.7
+      img.width = WIDTH * radio
+      img.height = HEIGHT * radio
 
-        ctx.clearRect(0, 0, $canvas.width, $canvas.height)
-        $canvas.style.display = 'none'
-        $container.appendChild(img);
-        $container.removeChild($wrapper)
-        if (config.callback) {
-          config.callback($container)
-        }
+      ctx.clearRect(0, 0, $canvas.width, $canvas.height)
+      $canvas.style.display = 'none'
+      $container.appendChild(img);
+      $container.removeChild($wrapper)
+      if (config.callback) {
+        config.callback($container)
+      }
     }
   }
 
