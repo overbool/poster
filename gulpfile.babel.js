@@ -21,15 +21,19 @@ gulp.task('js', () => {
       presets: ['@babel/env']
     }))
     .pipe(concat('poster.js'))
-    .pipe(header(banner, { package : pkg }))
+    .pipe(header(banner, {
+      package: pkg
+    }))
     .pipe(gulp.dest('dist/'))
     .pipe(uglify())
     .pipe(concat('poster.min.js'))
-    .pipe(header(banner, { package : pkg }))
+    .pipe(header(banner, {
+      package: pkg
+    }))
     .pipe(gulp.dest('dist/'))
 });
 
-gulp.watch('src/**/*.js', function (e) {
+gulp.watch('src/**/*.js', function(e) {
   gulp.start('js')
 })
 

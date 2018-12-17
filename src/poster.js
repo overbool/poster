@@ -1,5 +1,5 @@
 // post class
-const poster = (function () {
+const poster = (function() {
 
   const DEBUG = false
 
@@ -84,11 +84,11 @@ const poster = (function () {
 
     // background image
     const image = new Image();
-    const onload = function () {
+    const onload = function() {
       $canvas.width = WIDTH;
       $canvas.height = HEIGHT;
       image.src = config.banner;
-      image.onload = function () {
+      image.onload = function() {
         const ctx = $canvas.getContext('2d')
         ctx.fillStyle = 'rgba(255, 255, 255, 1)';
         ctx.fillRect(0, 0, $canvas.width, $canvas.height)

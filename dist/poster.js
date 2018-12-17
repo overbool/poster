@@ -1,4 +1,4 @@
-/*! poster v1.0.0 | (c) 2018 Overbool | https://github.com/overbool/poster */
+/*! @overbool/poster v1.0.1 | (c) 2018 Overbool | https://github.com/overbool/poster */
 "use strict";
 
 // post class
