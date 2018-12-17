@@ -72,6 +72,8 @@
         </div>
     </div>
 </div>
+<div class="poster-render"></div>
+<input type="button" value="click" onclick="render()">
 
 <script>
   poster.init({
@@ -125,6 +127,21 @@
     qrcodeDesc: '扫描右侧二维码阅读全文',
     callback: download
   })
+
+  function render() {
+    poster.init({
+      banner: './images/home.jpg',
+      selector: '.poster-render',
+      author: 'Overbool',
+      title: '不可能である',
+      content: '不可能なことはありません。一つの事にも方法があり、十分な意思があれば、私たちはいつまでも十分な方法があります。普通はただ一つの言い訳のためにあることは不可能だと言います。',
+      logo: '16px.io',
+      description: '最も美しい、最も優雅なテーマを開発する',
+      qrcode: './images/qrcode.png',
+      qrcodeDesc: '扫描右侧二维码阅读全文',
+      callback: download
+    })
+  }
 
   function download(container) {
     const $btn = container.querySelector('.btn-download')

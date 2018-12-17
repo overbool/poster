@@ -98,7 +98,7 @@ var poster = function () {
     var image = new Image();
     var qrcodeImg = new Image();
 
-    var onload = function onload() {
+    var run = function run() {
       $canvas.width = WIDTH;
       $canvas.height = HEIGHT; // load background image and qrcode
 
@@ -112,7 +112,7 @@ var poster = function () {
       };
     };
 
-    window.addEventListener("load", onload, false);
+    run();
 
     var render = function render() {
       var ctx = $canvas.getContext('2d');

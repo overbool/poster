@@ -106,7 +106,7 @@ const poster = (function () {
     // background image
     const image = new Image();
     const qrcodeImg = new Image();
-    const onload = function () {
+    const run = function () {
       $canvas.width = WIDTH
       $canvas.height = HEIGHT
 
@@ -119,7 +119,8 @@ const poster = (function () {
         image.onload = render
       }
     }
-    window.addEventListener("load", onload, false)
+
+    run()
 
     const render = function() {
         const ctx = $canvas.getContext('2d')
