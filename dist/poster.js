@@ -113,7 +113,7 @@ var poster = function () {
       };
     };
 
-    window.addEventListener("load", onload, false);
+    onload();
   }
 
   function createDom(name, key, value) {
