@@ -15,7 +15,8 @@
   "license": "MIT",
   "devDependencies": {
     "babel-preset-es2015": "^6.24.1",
-    "gulp-babel": "^8.0.0"
+    "gulp-babel": "^8.0.0",
+    "gulp-connect": "^5.7.0"
   },
   "dependencies": {
     "@babel/core": "^7.1.2",
