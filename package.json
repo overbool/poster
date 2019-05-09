@@ -11,6 +11,9 @@
     "js",
     "javascript"
   ],
+  "scripts": {
+    "dev": "gulp"
+  },
   "author": "Overbool",
   "license": "MIT",
   "devDependencies": {

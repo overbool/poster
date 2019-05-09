@@ -83,6 +83,12 @@ poster.init({
   })
 ```
 
+## Documentation
+### running locally
+1. Run `npm install` to install the Node.js dependencies
+2. Run `npm run dev` to rebuild Javascript files and start a local http server with port 8080.
+
+
 ## License
 [MIT license](./LICENSE)
 
